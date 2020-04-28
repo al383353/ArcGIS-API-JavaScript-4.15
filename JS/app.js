@@ -46,7 +46,7 @@
             symbol: {
               type: "simple-line",
               color: "red",
-              width: "2px"
+              width: "4px"
             }
           },
   
@@ -91,11 +91,12 @@
         var parksLayer = new FeatureLayer({
           url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Parks_and_Open_Space/FeatureServer/0",
           renderer: openSpacesRenderer,
-          opacity: 0.20
+          opacity: 0.50
         });
   
-        map.add(parksLayer, 0);/* Configure layers tutorial to apply styles on the server-side and the Style feature layers tutorial to apply styles on the client-side*/
-        
+        map.add(parksLayer, 0);/* Configure layers tutorial to apply styles on the server-side and the Style 
+        feature layers tutorial to apply styles on the client-side*/
+        /*
         var trailheadsRenderer = {
           type: "simple",
           symbol: {
@@ -123,12 +124,13 @@
             expression: "$feature.TRL_NAME"
           }
         };
-        var featureLayer = new FeatureLayer({
+        
+        var trailHead = new FeatureLayer({
              url:"https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0",
              renderer: trailheadsRenderer,
              labelingInfo: [trailheadsLabels]
          });
-         map.add(featureLayer);
+         map.add(trailHead);*/
          var trailsRenderer = {
           type: "simple",
           symbol: {
@@ -172,4 +174,15 @@
         });
   
         map.add(bikeTrails, 2);
+        //
+        var popuptrailHead={
+            "title":"{TRL_NAME}",
+            "content": "<b>City:</b> {CITY_JUR}<br><b>Cross Street:</b> {X_STREET}<br><b>Parking:</b> {PARKING}<br><b>Elevation:</b> {ELEV_FT} ft"
+        }
+        var trailHeadPopup = new FeatureLayer({
+             url:"https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads_Styled/FeatureServer/0",
+             outFields:["TRL_NAME", "CITY_JUR","X_STREET","PARKING","ELEV_FT"],
+             popupTemplate:popuptrailHead
+         });
+         map.add(trailHeadPopup);
       });
