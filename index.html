@@ -10,6 +10,21 @@
       height: 100%;
       width: 100%;
     }
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 80%;
+    }
+    .left{
+      width: 20%; 
+      height: 100%; color: rgb(245, 236, 236);
+      background: rgb(84, 103, 138); float: left;
+    }
+    .left a{
+      color: white;
+    }
+
   </style>
 
   <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
@@ -19,6 +34,12 @@
   </script>
 </head>
 <body>
-  <div id="viewDiv"></div>
+  <div>
+    <div class="left">
+      <a href="/navs/query.html">Feature Query</a>
+    </div>
+    <div id="viewDiv"></div>
+  </div>
+  
 </body>
 </html>

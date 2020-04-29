@@ -1,11 +1,13 @@
-//https://developers.arcgis.com/javascript/latest/guide/configure-pop-ups/
+//https://developers.arcgis.com/javascript/latest/guide/filter-a-feature-layer/
     require([
         "esri/Map",
         "esri/views/MapView", //SceneView
         "esri/widgets/BasemapToggle",
         "esri/widgets/BasemapGallery",
-        "esri/layers/FeatureLayer"
-      ], function(Map, MapView, BasemapToggle, BasemapGallery, FeatureLayer) {//SceneView
+        "esri/layers/FeatureLayer",
+        "esri/layers/GraphicsLayer",
+      "esri/Graphic"
+      ], function(Map, MapView, BasemapToggle, BasemapGallery, FeatureLayer, GraphicsLayer, Graphic) {//SceneView
   
         var map = new Map({
           basemap: "streets-navigation-vector" //,ground: "world-elevation"  // show elevation
@@ -175,7 +177,8 @@
   
         map.add(parksLayer, 0);/* Configure layers tutorial to apply styles on the server-side and the Style 
         feature layers tutorial to apply styles on the client-side*/
-        //
+        
+        //Trail Heads
         var trailheadsRenderer = {
           type: "simple",
           symbol: {
@@ -214,7 +217,10 @@
              outFields:["TRL_NAME", "CITY_JUR","X_STREET","PARKING","ELEV_FT"],
              popupTemplate:popuptrailHead
          });
-         map.add(trailHead);
+         // Layer used to draw graphics returned
+            var graphicsLayer = new GraphicsLayer();
+            map.add(graphicsLayer);
+            map.add(trailHead);
          //
          var trailsRenderer = {
           type: "simple",
