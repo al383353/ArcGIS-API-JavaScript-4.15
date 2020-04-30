@@ -134,7 +134,7 @@
         queryFeatureLayerView(event.mapPoint, 1500, sql);
       });
       //*** ADD ***//
-      view.when(function(){
+      /*view.when(function(){
         view.whenLayerView(featureLayer).then(function(featureLayerView) {
           view.on("pointer-move", function(event){
             view.hitTest(event).then(function(response){
@@ -155,9 +155,72 @@
             });
           });
         });
+      });*/
+
+      var featureLayerTrails = new FeatureLayer({
+         url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trails_Styled/FeatureServer/0",
+         outFields: ["*"], // Return all fields so it can be queried client-side
+         //definitionExpression ="TRL_ID = 0", //enable to display only features with TRL_ID 0
+         popupTemplate: {  // Enable a popup
+           title: "{TRL_NAME}", // Show attribute value
+           content: "The trail elevation gain is {ELEV_GAIN} ft."  // Display in pop-up
+         }
+       });
+
+       map.add(featureLayerTrails);
+       var sqlExpressions = ["TRL_ID = 0", "TRL_ID > 0",  "USE_BIKE = 'Yes'", "USE_BIKE = 'No'", "ELEV_GAIN < 1000", "ELEV_GAIN > 1000", "TRL_NAME = 'California Coastal Trail'"];
+
+      var selectFilter = document.createElement("select");
+      selectFilter.setAttribute("class", "esri-widget esri-select");
+      selectFilter.setAttribute("style", "width: 275px; font-family: Avenir Next W00; font-size: 1em;");
+
+      sqlExpressions.forEach(function(sql){
+        var option = document.createElement("option");
+        option.value = sql;
+        option.innerHTML = sql;
+        selectFilter.appendChild(option);
       });
 
-
+      view.ui.add(selectFilter, "top-right");
+      
+      selectFilter.addEventListener('change', function (event) {
+        //setFeatureLayerFilter(event.target.value);
+        setFeatureLayerViewFilter(event.target.value);
+      });
+     /* function setFeatureLayerFilter(expression) {
+        featureLayerTrails.definitionExpression = expression;
+      }*/
+      function setFeatureLayerViewFilter(expression) {
+        //var highlight;
+        view.whenLayerView(featureLayerTrails).then(function(featureLayerView) {
+         /* featureLayerView.filter = {
+            where: expression
+          };*/
+         featureLayerView.effect = {
+            filter: {
+              where: expression
+            },
+            excludedEffect: "opacity(50%)"
+          }/*
+          view.on("pointer-move", function(event){
+          view.hitTest(event).then(function(response){
+            // Only return features for the feature layer
+            var feature = response.results.filter(function (result) {
+             return result.graphic.layer === featureLayerTrails;
+            })[0].graphic;
+            if (highlight) {
+             highlight.remove();
+            }
+            // Highlight feature
+            highlight = featureLayerView.highlight(feature);
+          });
+        });*/
+        });
+      }
+      selectFilter.addEventListener('change', function (event) {
+        // setFeatureLayerFilter(event.target.value);
+        setFeatureLayerViewFilter(event.target.value);
+      });
     });
   </script>
 </head>
