@@ -1,4 +1,4 @@
-//https://developers.arcgis.com/javascript/latest/guide/filter-a-feature-layer/
+//https://developers.arcgis.com/javascript/latest/guide/maps-and-views/
     require([
         "esri/Map",
         "esri/views/MapView", //SceneView
