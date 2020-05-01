@@ -1,4 +1,7 @@
-//https://developers.arcgis.com/javascript/latest/guide/maps-and-views/
+//https://developers.arcgis.com/javascript/latest/guide/vue/
+//https://developers.arcgis.com/javascript/latest/guide/webpack/
+//https://github.com/Esri/arcgis-js-cli
+//https://www.zdf.de/serien/rosamunde-pilcher/rosamunde-pilcher-zauber-der-liebe-100.html
     require([
         "esri/Map",
         "esri/views/MapView", //SceneView
